@@ -45,7 +45,7 @@ ALLOWED_HOSTS = ['easy-conta-ultimate-production.up.railway.app', 'localhost']
 # Application definition
 
 SHARED_APPS = [
-    # 'django_tenants',
+    'django_tenants',
     'widget_tweaks',
     'django_user_agents',
     'django_cleanup.apps.CleanupConfig',
@@ -55,7 +55,7 @@ SHARED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    # 'core.tenant',
+    'core.tenant',
     'core.security',
     'core.user',
 ]
@@ -68,14 +68,19 @@ TENANT_APPS = [
     'django.contrib.messages',
     'core.security',
     'core.user',
-    # 'core.login',
-    # 'core.dashboard',
-    # 'core.pos',
-    # 'core.rrhh',
-    # 'core.reports'
+    'core.login',
+    'core.dashboard',
+    'core.pos',
+    'core.rrhh',
+    'core.reports'
 ]
 
-INSTALLED_APPS = ['django.contrib.staticfiles', 'widget_tweaks', 'django_user_agents', 'django_cleanup.apps.CleanupConfig', 'django.contrib.admin', 'django.contrib.auth', 'django.contrib.contenttypes', 'django.contrib.sessions', 'django.contrib.messages', 'core.security',  'core.user']
+# INSTALLED_APPS = list(SHARED_APPS) + [
+#     app for app in TENANT_APPS if app not in SHARED_APPS
+# ]
+INSTALLED_APPS = ['django_tenants', 'django.contrib.staticfiles', 'core.tenant', 'widget_tweaks', 'django_user_agents', 'django_cleanup.apps.CleanupConfig', 'django.contrib.admin', 'django.contrib.auth', 'django.contrib.contenttypes', 'django.contrib.sessions', 'django.contrib.messages', 'core.security', 'core.user', 'core.login', 'core.dashboard', 'core.pos', 'core.rrhh', 'core.reports']
+
+
 
 MIDDLEWARE = [
     'django_tenants.middleware.main.TenantMainMiddleware',
@@ -220,4 +225,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DOMAIN = env.str('DOMAIN', default='localhost')
 
-# DEFAULT_SCHEMA = env.str('DEFAULT_SCHEMA', default='public')
+DEFAULT_SCHEMA = env.str('DEFAULT_SCHEMA', default='public')
