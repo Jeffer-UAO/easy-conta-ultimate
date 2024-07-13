@@ -39,7 +39,7 @@ DEBUG = env('DEBUG', default=True)
 
 
 
-ALLOWED_HOSTS = ['easy-conta-ultimate-production.up.railway.app']
+ALLOWED_HOSTS = ['easy-conta-ultimate-production.up.railway.app', 'localhost']
 
 
 # Application definition
@@ -68,14 +68,14 @@ TENANT_APPS = [
     'django.contrib.messages',
     'core.security',
     'core.user',
-    # 'core.login',
-    # 'core.dashboard',
+    'core.login',
+    'core.dashboard',
     'core.pos',
-    # 'core.rrhh',
-    # 'core.reports'
+    'core.rrhh',
+    'core.reports'
 ]
 
-INSTALLED_APPS = ['django_tenants', 'django.contrib.staticfiles', 'core.tenant', 'widget_tweaks', 'django_user_agents', 'django_cleanup.apps.CleanupConfig', 'django.contrib.admin', 'django.contrib.auth', 'django.contrib.contenttypes', 'django.contrib.sessions', 'django.contrib.messages', 'core.security', 'core.user', 'core.pos']
+INSTALLED_APPS = ['django_tenants', 'django.contrib.staticfiles', 'core.tenant', 'widget_tweaks', 'django_user_agents', 'django_cleanup.apps.CleanupConfig', 'django.contrib.admin', 'django.contrib.auth', 'django.contrib.contenttypes', 'django.contrib.sessions', 'django.contrib.messages', 'core.security', 'core.user', 'core.login', 'core.dashboard', 'core.pos', 'core.rrhh', 'core.reports']
 
 MIDDLEWARE = [
     'django_tenants.middleware.main.TenantMainMiddleware',
