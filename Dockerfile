@@ -23,6 +23,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . /app
 WORKDIR /app
 
+# Run collectstatic
+RUN python manage.py collectstatic --noinput
+
 # Exponer el puerto y especificar el comando de inicio
 EXPOSE 8080
 CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8080"]
