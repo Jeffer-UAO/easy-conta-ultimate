@@ -17,15 +17,27 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env()
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
+environ.Env.read_env(os.path.join(BASE_DIR, '.env.local'))
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@!o@2se*(b8lg6#h@*4t013@#6ad47p#*3c56aig=3j4w_6bct'
+
+# # Quick-start development settings - unsuitable for production
+# # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
+
+# # SECURITY WARNING: keep the secret key used in production secret!
+# SECRET_KEY = 'django-insecure-@!o@2se*(b8lg6#h@*4t013@#6ad47p#*3c56aig=3j4w_6bct'
+
+# # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = True
+
+
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG', default=True)
+
+
 
 ALLOWED_HOSTS = ['easy-conta-ultimate-production.up.railway.app']
 
@@ -75,17 +87,40 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+def get_db_config(environ_var='DATABASE_URL'):
+    """Get Database configuration."""
+    options = env.db(var=environ_var, default='sqlite:///db.sqlite3')
+    if options['ENGINE'] != 'django.db.backends.sqlite3':
+        return options
+
+    # This will allow use a relative to the project root DB path
+    # for SQLite like 'sqlite:///db.sqlite3'
+    if not options['NAME'] == ':memory:' and not os.path.isabs(options['NAME']):
+        options.update({'NAME': os.path.join(BASE_DIR, options['NAME'])})
+
+    return options
+
+
+db_config = get_db_config()
+db_config['ENGINE'] = 'django_tenants.postgresql_backend'
+
 DATABASES = {
-    'default': {
-        # 'ENGINE': 'django_tenants.postgresql_backend',
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'WzivTdJQTorRbgKSgwhqJBqaYyKCDKFA',
-        'HOST': 'viaduct.proxy.rlwy.net',
-        'PORT': '17013',
-    }
+    'default': db_config
 }
+
+
+
+# DATABASES = {
+#     'default': {
+#         # 'ENGINE': 'django_tenants.postgresql_backend',
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'railway',
+#         'USER': 'postgres',
+#         'PASSWORD': 'WzivTdJQTorRbgKSgwhqJBqaYyKCDKFA',
+#         'HOST': 'viaduct.proxy.rlwy.net',
+#         'PORT': '17013',
+#     }
+# }
 
 
 # Password validation
