@@ -39,7 +39,7 @@ DEBUG = env('DEBUG', default=True)
 
 
 
-ALLOWED_HOSTS = ['easy-conta-ultimate-production.up.railway.app', 'localhost']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
