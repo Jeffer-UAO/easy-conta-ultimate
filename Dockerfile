@@ -24,7 +24,7 @@ COPY . /app
 WORKDIR /app
 
 # Run collectstatic
-# RUN python manage.py collectstatic --noinput
+RUN python manage.py collectstatic --noinput
 
 # Exponer el puerto y especificar el comando de inicio
 EXPOSE 8080
