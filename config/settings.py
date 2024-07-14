@@ -181,7 +181,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'https://41388786.easy-conta-static.pages.dev/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
